@@ -25,4 +25,9 @@ public class Shooter {
 
     }
 
+    public void simpleShoot() {
+        leftShooter.setPower(0.8);
+        rightShooter.setPower(0.8);
+    }
+
 }

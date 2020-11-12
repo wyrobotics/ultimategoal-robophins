@@ -7,12 +7,16 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Intake {
 
-    private DcMotor intake;
+    private DcMotor intakeMotor;
 
     public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
 
-        intake = hardwareMap.get(DcMotor.class, "intake");
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
 
     }
+
+    public void intake() { intakeMotor.setPower(1); }
+
+    public void intake(double power) { intakeMotor.setPower(power); }
 
 }
