@@ -23,4 +23,22 @@ public class Drivebase {
 
     }
 
+    public void discOrtho(double leftStickX, double leftStickY, double turningPower) {
+
+        double theta = Math.atan2(leftStickY, leftStickX);
+        double magnitude = Math.hypot(leftStickX, leftStickY);
+
+        double flbr = magnitude * Math.cos(theta - (Math.PI / 4));
+        double frbl = magnitude * Math.sin(theta - (Math.PI / 4));
+
+        //double rotChange = Math.min(Math.abs(turningPower),
+         //       Math.min(1 - Math.abs(flbr), 1 - Math.abs(frbl)));
+
+        frontLeft.setPower(flbr + turningPower);
+        frontRight.setPower(frbl - turningPower);
+        backLeft.setPower(frbl + turningPower);
+        backRight.setPower(flbr - turningPower);
+
+    }
+
 }

@@ -16,9 +16,11 @@ public class MainRobot {
     Shooter shooter;
     Intake intake;
     WobbleGoalArm wobbleGoalArm;
-    Drivebase drivebase;
+    //TODO: Make not public
+    public Drivebase drivebase;
 
-    OdometryTracker odometryTracker;
+    //TODO: Probably make not public
+    public OdometryTracker odometryTracker;
 
     public MainRobot(HardwareMap hardwareMap, Telemetry telemetry) {
 
@@ -26,6 +28,8 @@ public class MainRobot {
         intake = new Intake(hardwareMap, telemetry);
         wobbleGoalArm = new WobbleGoalArm(hardwareMap, telemetry);
         drivebase = new Drivebase(hardwareMap, telemetry);
+
+        odometryTracker = new OdometryTracker(hardwareMap, telemetry);
 
     }
 
