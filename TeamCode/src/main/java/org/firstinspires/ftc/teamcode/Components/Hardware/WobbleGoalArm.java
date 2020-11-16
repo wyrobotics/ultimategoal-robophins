@@ -13,7 +13,7 @@ public class WobbleGoalArm {
     private Mode mode = Mode.REST;
 
     public enum Mode {
-        REST, GRAB, LIFT;
+        REST, LIFT;
     }
 
     public WobbleGoalArm(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -25,23 +25,17 @@ public class WobbleGoalArm {
 
     public void down() {
         mode = Mode.REST;
-        wobbleLifter.setPosition(0);
+        wobbleLifter.setPosition(0.3);
     }
 
-    public void grabPosition() {
-        mode = Mode.GRAB;
-        wobbleLifter.setPosition(0.5);
-    }
 
     public void lift() {
         mode = Mode.LIFT;
-        wobbleGrabber.setPosition(0.1);
         wobbleLifter.setPosition(1);
     }
 
+    public void grab() { wobbleGrabber.setPosition(0.3); }
 
-    public void grab() { wobbleGrabber.setPosition(0.1); }
-
-    public void release() { if(mode != Mode.LIFT) { wobbleGrabber.setPosition(0.7); }; }
+    public void release() { if(mode != Mode.REST) { wobbleGrabber.setPosition(1); }; }
 
 }

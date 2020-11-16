@@ -24,13 +24,13 @@ public class OdometryTracker {
 
         //TODO: Map odometers to whichever ports make the most sense based on cabling
 
-        rightOdometer = hardwareMap.get(DcMotor.class, "frontLeft");
-        leftOdometer = hardwareMap.get(DcMotor.class, "frontRight");
-        normalOdometer = hardwareMap.get(DcMotor.class, "backLeft");
+        rightOdometer = hardwareMap.get(DcMotor.class, "rightOdometer");
+        leftOdometer = hardwareMap.get(DcMotor.class, "intakeMotor");
+        normalOdometer = hardwareMap.get(DcMotor.class, "leftShooter");
 
-        rightOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        normalOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rightOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //leftOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //normalOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 

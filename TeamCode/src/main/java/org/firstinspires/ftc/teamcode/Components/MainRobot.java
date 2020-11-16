@@ -11,15 +11,13 @@ import org.firstinspires.ftc.teamcode.Components.Hardware.Intake;
 import org.firstinspires.ftc.teamcode.Components.Hardware.Shooter;
 import org.firstinspires.ftc.teamcode.Components.Hardware.WobbleGoalArm;
 
-public class MainRobot {
+public class  MainRobot {
 
-    Shooter shooter;
-    Intake intake;
-    WobbleGoalArm wobbleGoalArm;
-    //TODO: Make not public
+    public Shooter shooter;
+    public Intake intake;
+    public WobbleGoalArm wobbleGoalArm;
     public Drivebase drivebase;
 
-    //TODO: Probably make not public
     public OdometryTracker odometryTracker;
 
     public MainRobot(HardwareMap hardwareMap, Telemetry telemetry) {
