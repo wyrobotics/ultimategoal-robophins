@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.Components.GlobalPositioning.*;
+import static org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning.*;
 
 @TeleOp
 public class ResetPosition extends LinearOpMode {

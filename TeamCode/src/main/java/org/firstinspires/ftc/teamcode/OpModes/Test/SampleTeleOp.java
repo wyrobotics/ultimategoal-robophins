@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.MainRobot;
 
-import static org.firstinspires.ftc.teamcode.Components.GlobalPositioning.robotTheta;
-import static org.firstinspires.ftc.teamcode.Components.GlobalPositioning.robotX;
-import static org.firstinspires.ftc.teamcode.Components.GlobalPositioning.robotY;
+import static org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning.robotTheta;
+import static org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning.robotX;
+import static org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning.robotY;
 
 @TeleOp
 public class SampleTeleOp extends LinearOpMode {

@@ -1,16 +1,15 @@
-package org.firstinspires.ftc.teamcode.Components;
+package org.firstinspires.ftc.teamcode.Components.Software;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ThreadPool;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Components.Hardware.GlobalConfig;
 
 import java.util.concurrent.ExecutorService;
 
 import static org.firstinspires.ftc.teamcode.Components.Hardware.GlobalConfig.*;
-import static org.firstinspires.ftc.teamcode.Components.GlobalPositioning.*;
+import static org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning.*;
 
 public class OdometryTracker {
 

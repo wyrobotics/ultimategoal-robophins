@@ -3,9 +3,8 @@ package org.firstinspires.ftc.teamcode.OpModes.Test;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.internal.android.dx.command.Main;
 import org.firstinspires.ftc.teamcode.Components.MainRobot;
-import static org.firstinspires.ftc.teamcode.Components.GlobalPositioning.*;
+import static org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning.*;
 
 @TeleOp
 public class MovementTest extends LinearOpMode {
