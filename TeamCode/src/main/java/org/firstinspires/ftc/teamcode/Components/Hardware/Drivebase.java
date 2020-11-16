@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning;
 
 public class Drivebase {
 
@@ -48,6 +49,32 @@ public class Drivebase {
         frontRight.setPower(maxPower * (frbl + turningPower));
         backLeft.setPower(maxPower * (frbl - turningPower));
         backRight.setPower(maxPower * (flbr + turningPower));
+
+    }
+
+    public void gotoPos(double x, double y, double theta) {
+
+        double dx = x - GlobalPositioning.robotX;
+        double dy = y - GlobalPositioning.robotY;
+        double dTheta = GlobalPositioning.robotTheta - theta;
+
+        double movementX, movementY, turningPower;
+
+        while(Math.hypot(dx, dy) > 0.3 || dTheta > 1) {
+
+            movementX = dx / Math.max(Math.hypot(dx,dy), 1);
+            movementY = dy / Math.max(Math.hypot(dx,dy), 1);
+            turningPower = Math.signum(dTheta) * Math.max(1, Math.abs(dTheta));
+
+            discOrtho(movementX, movementY, turningPower);
+
+            dx = x - GlobalPositioning.robotX;
+            dy = y - GlobalPositioning.robotY;
+            dTheta = GlobalPositioning.robotTheta - theta;
+
+        }
+
+        discOrtho(0,0,0);
 
     }
 

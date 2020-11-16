@@ -57,7 +57,7 @@ public class RingHeightObserver extends LinearOpMode {
 
             //telemetry.addData("Contour Area", contourArea);
 
-            telemetry.addData("Stack Height:",stackHeight(contourArea));
+            telemetry.addData("Stack Height:", stackHeight(contourArea));
 
             telemetry.update();
 
