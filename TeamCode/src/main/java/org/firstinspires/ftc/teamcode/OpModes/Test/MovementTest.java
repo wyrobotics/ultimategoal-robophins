@@ -28,6 +28,9 @@ public class MovementTest extends LinearOpMode {
             telemetry.addData("Robot X: ", robotX);
             telemetry.addData("Robot Y: ", robotY);
             telemetry.addData("Robot Heading: ", robotTheta);
+            telemetry.addData("Right Encoder: ", mainRobot.odometryTracker.rightOdometerPosition);
+            telemetry.addData("Left Encoder: ", mainRobot.odometryTracker.leftOdometerPosition);
+            telemetry.addData("Norm Encoder: ", mainRobot.odometryTracker.normalOdometerPosition);
             telemetry.update();
 
         }

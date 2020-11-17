@@ -13,19 +13,22 @@ import static org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioni
 
 public class OdometryTracker {
 
-    DcMotor rightOdometer, leftOdometer, normalOdometer;
-    double rightOdometerPosition, leftOdometerPosition, normalOdometerPosition;
+    public DcMotor rightOdometer, leftOdometer, normalOdometer;
+    //TODO: NOT PUBLICCC
+    public double rightOdometerPosition, leftOdometerPosition, normalOdometerPosition;
 
     private ExecutorService odometryUpdaterExecutor;
     private Boolean continueExecution = true;
 
+    Telemetry telemetry;
+
     public OdometryTracker(HardwareMap hardwareMap, Telemetry telemetry) {
 
-        //TODO: Map odometers to whichever ports make the most sense based on cabling
-
         rightOdometer = hardwareMap.get(DcMotor.class, "rightOdometer");
-        leftOdometer = hardwareMap.get(DcMotor.class, "intakeMotor");
-        normalOdometer = hardwareMap.get(DcMotor.class, "leftShooter");
+        leftOdometer = hardwareMap.get(DcMotor.class, "leftShooter");
+        normalOdometer = hardwareMap.get(DcMotor.class, "intakeMotor");
+
+        this.telemetry = telemetry;
 
         //rightOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //leftOdometer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -35,9 +38,13 @@ public class OdometryTracker {
 
     private void updatePosition() {
 
-        double dR = (rightOdometer.getCurrentPosition() - rightOdometerPosition) / countsPerInch;
-        double dL = (leftOdometer.getCurrentPosition() - leftOdometerPosition) / countsPerInch;
-        double dN = (normalOdometer.getCurrentPosition() - normalOdometerPosition) / countsPerInch;
+        double newRight = rightOdometer.getCurrentPosition();
+        double newLeft = leftOdometer.getCurrentPosition();
+        double newNorm = normalOdometer.getCurrentPosition();
+
+        double dR = -(newRight - rightOdometerPosition) / countsPerInch;
+        double dL = (newLeft - leftOdometerPosition) / countsPerInch;
+        double dN = (newNorm - normalOdometerPosition) / countsPerInch;
 
         double localDx = dN - (normalOffset * (dR - dL) / podDistance);
         double localDy = (dR + dL) / 2;
@@ -45,11 +52,12 @@ public class OdometryTracker {
         robotX += (localDx * Math.cos(robotTheta)) - (localDy * Math.sin(robotTheta));
         robotY += (localDx * Math.sin(robotTheta)) + (localDy * Math.cos(robotTheta));
 
-        robotTheta += (dR - dL) / podDistance;
+        robotTheta += (dL - dR) / podDistance;
 
-        rightOdometerPosition += dR * countsPerInch;
-        leftOdometerPosition += dL * countsPerInch;
-        normalOdometerPosition += dN * countsPerInch;
+        rightOdometerPosition = newRight;
+        leftOdometerPosition = newLeft;
+        normalOdometerPosition = newNorm;
+
 
     }
 
