@@ -10,10 +10,15 @@ public class WobbleGoalArm {
     private Servo wobbleLifter;
     private Servo wobbleGrabber;
 
-    private Mode mode = Mode.REST;
+    public Mode mode = Mode.REST;
+    public GrabberMode grabberMode = GrabberMode.OPEN;
 
     public enum Mode {
         REST, LIFT;
+    }
+
+    public enum GrabberMode {
+        OPEN, CLOSED;
     }
 
     public WobbleGoalArm(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -34,8 +39,14 @@ public class WobbleGoalArm {
         wobbleLifter.setPosition(1);
     }
 
-    public void grab() { wobbleGrabber.setPosition(0.3); }
+    public void grab() {
+        grabberMode = GrabberMode.CLOSED;
+        wobbleGrabber.setPosition(0.3);
+    }
 
-    public void release() { if(mode != Mode.REST) { wobbleGrabber.setPosition(1); }; }
+    public void release() {
+        grabberMode = GrabberMode.OPEN;
+        wobbleGrabber.setPosition(1);
+    }
 
 }

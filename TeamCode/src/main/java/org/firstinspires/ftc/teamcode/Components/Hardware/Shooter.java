@@ -20,7 +20,7 @@ public class Shooter {
 
     //private DigitalChannel shooterSwitch;
 
-    private double setpoint;
+    private double setpoint = 0;
     private double[] lastPos = new double[3];
 
     private double kP, kI, kD;

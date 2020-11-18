@@ -7,5 +7,7 @@ public class GlobalConfig {
     public static double normalOffset = 0;
 
     public static double shooterCountsPerRev;
+    public static double goalSpeed;
+    public static double powerShotSpeed;
 
 }
