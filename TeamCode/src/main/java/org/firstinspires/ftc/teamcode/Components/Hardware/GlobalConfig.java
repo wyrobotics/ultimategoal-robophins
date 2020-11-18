@@ -6,4 +6,6 @@ public class GlobalConfig {
     public static double podDistance = 17.36;
     public static double normalOffset = 0;
 
+    public static double shooterCountsPerRev;
+
 }

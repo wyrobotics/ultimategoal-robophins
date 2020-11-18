@@ -4,15 +4,26 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ThreadPool;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import java.util.concurrent.ExecutorService;
+
 public class Shooter {
+
+    private ExecutorService shooterExecutor;
+    private Boolean continueExecution = true;
 
     private DcMotor leftShooter;
     private DcMotor rightShooter;
 
     //private DigitalChannel shooterSwitch;
+
+    private double setpoint;
+    private double[] lastPos = new double[3];
+
+    private double kP, kI, kD;
 
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
 
@@ -23,6 +34,8 @@ public class Shooter {
         rightShooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         leftShooter.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        //Right shooter has encoder
 
         //shooterSwitch = hardwareMap.get(DigitalChannel.class, "shooterSwitch");
 
@@ -36,6 +49,58 @@ public class Shooter {
     public void simpleShoot(double power) {
         leftShooter.setPower(power);
         rightShooter.setPower(power);
+    }
+
+    public void setSetpoint(double setpoint) { this.setpoint = setpoint; }
+
+    private void shooterController(double integrator) {
+
+        lastPos[0] = lastPos[1];
+        lastPos[1] = lastPos[2];
+        lastPos[2] = rightShooter.getCurrentPosition();
+
+        double e = setpoint - ((lastPos[2] - lastPos[1]) / 0.01);
+
+        integrator += e * 0.01;
+
+        double u = (kP * e) + (kI * integrator) + (kD * (e - (setpoint - ((lastPos[1] - lastPos[10]) / 0.01))) / 0.01);
+
+        rightShooter.setPower(u);
+        leftShooter.setPower(u);
+
+    }
+
+    private Runnable shooterRunnable = new Runnable() {
+        @Override
+        public void run() {
+            continueExecution = true;
+            lastPos[1] = rightShooter.getCurrentPosition();
+            lastPos[2] = rightShooter.getCurrentPosition();
+            double integrator = 0;
+            while(continueExecution && !Thread.currentThread().isInterrupted()) {
+                shooterController(integrator);
+                sleep(10);
+            }
+        }
+    };
+
+    public void startShooter() {
+        shooterExecutor = ThreadPool.newSingleThreadExecutor("Odometry Updater");
+        shooterExecutor.execute(shooterRunnable);
+    }
+
+    public void shutdownShooter() {
+        continueExecution = false;
+        shooterExecutor.shutdownNow();
+        shooterExecutor = null;
+    }
+
+    private void sleep(double milliseconds) {
+
+        double time = System.currentTimeMillis();
+
+        while (System.currentTimeMillis() - time < milliseconds) { }
+
     }
 
 }
