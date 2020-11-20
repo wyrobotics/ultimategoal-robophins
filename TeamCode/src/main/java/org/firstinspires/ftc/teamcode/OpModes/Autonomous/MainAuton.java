@@ -30,7 +30,7 @@ public class MainAuton extends LinearOpMode {
 
     double contourArea = 0;
 
-    int stackHeight(double area) { return (area < 100) ? 0 : ((area > 250) ? 2 : 1); }
+    int stackHeight(double area) { return (area < 100) ? 0 : ((area > 450) ? 2 : 1); }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -55,8 +55,6 @@ public class MainAuton extends LinearOpMode {
         mainRobot.odometryTracker.startOdometry();
         //mainRobot.shooter.startShooter();
 
-        while(opModeIsActive()) {
-
             telemetry.addData("Stack Height:", stackHeight(contourArea));
             double height = stackHeight(contourArea);
             telemetry.update();
@@ -71,7 +69,7 @@ public class MainAuton extends LinearOpMode {
             mainRobot.deng(500);
 
             if(height == 1) {
-                mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1500, 500);
+                mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1750, 500);
                 mainRobot.deng(500);
             }
 
@@ -82,12 +80,33 @@ public class MainAuton extends LinearOpMode {
             mainRobot.wobbleGoalArm.down();
             mainRobot.deng(1000);
 
-            mainRobot.drivebase.discOrtho(0,0,0);
+            if(height != 1) {
+                mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1750, 500);
+                mainRobot.deng(500);
+            }
+
+            if(height == 2) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 2500, 500); }
+            if(height == 1) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 1500, 500); }
+            mainRobot.deng(500);
 
 
-        }
+
+        mainRobot.drivebase.turn180();
+        mainRobot.deng(1000);
+
+        mainRobot.shooter.simpleShoot(0.87);
+        mainRobot.deng(1000);
+        mainRobot.intake.intake();
+        mainRobot.deng(8000);
+
+        mainRobot.intake.intake(0);
+        mainRobot.shooter.simpleShoot(0);
+
+        mainRobot.drivebase.timedMovement(0,0.5,0,1000,500);
 
         mainRobot.odometryTracker.shutdownOdometry();
+
+        mainRobot.drivebase.discOrtho(0,0,0);
 
     }
 

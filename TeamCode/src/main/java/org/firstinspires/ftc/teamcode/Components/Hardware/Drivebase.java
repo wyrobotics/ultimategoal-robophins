@@ -107,4 +107,6 @@ public class Drivebase {
 
     }
 
+    public void turn180() { timedMovement(0, 0, 0.5, 2275, 600); }
+
 }
