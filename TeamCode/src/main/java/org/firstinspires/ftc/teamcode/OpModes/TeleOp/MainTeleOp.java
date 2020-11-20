@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.Hardware.GlobalConfig;
 import org.firstinspires.ftc.teamcode.Components.Hardware.WobbleGoalArm;
 import org.firstinspires.ftc.teamcode.Components.MainRobot;
 
+@TeleOp
 public class MainTeleOp extends LinearOpMode {
 
     MainRobot mainRobot;
@@ -21,7 +23,7 @@ public class MainTeleOp extends LinearOpMode {
         waitForStart();
 
         mainRobot.odometryTracker.startOdometry();
-        mainRobot.shooter.startShooter();
+        //mainRobot.shooter.startShooter();
 
         while(opModeIsActive()) {
 
@@ -44,7 +46,7 @@ public class MainTeleOp extends LinearOpMode {
                 } else {
                     mainRobot.wobbleGoalArm.down();
                 }
-            }
+            } else if(bDown && !gamepad1.b) { bDown = false; }
 
             if(!aDown && gamepad1.a) {
                 aDown = true;
@@ -53,9 +55,12 @@ public class MainTeleOp extends LinearOpMode {
                 } else {
                     mainRobot.wobbleGoalArm.release();
                 }
-            }
+            } else if(aDown && !gamepad1.a) { aDown = false; }
 
         }
+
+        mainRobot.odometryTracker.shutdownOdometry();
+        //mainRobot.shooter.shutdownShooter();
 
     }
 

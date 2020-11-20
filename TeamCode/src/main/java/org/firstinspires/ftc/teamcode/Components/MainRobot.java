@@ -29,4 +29,9 @@ public class  MainRobot {
 
     }
 
+    public void deng(double millis) {
+        double init = System.currentTimeMillis();
+        while(System.currentTimeMillis() < init + millis) { }
+    }
+
 }

@@ -33,7 +33,7 @@ public class Shooter {
         leftShooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightShooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        leftShooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //Right shooter has encoder
 
@@ -85,7 +85,7 @@ public class Shooter {
     };
 
     public void startShooter() {
-        shooterExecutor = ThreadPool.newSingleThreadExecutor("Odometry Updater");
+        shooterExecutor = ThreadPool.newSingleThreadExecutor("Shooter Thread");
         shooterExecutor.execute(shooterRunnable);
     }
 

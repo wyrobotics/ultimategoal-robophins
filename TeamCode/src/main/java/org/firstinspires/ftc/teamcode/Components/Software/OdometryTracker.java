@@ -43,7 +43,7 @@ public class OdometryTracker {
         double newNorm = normalOdometer.getCurrentPosition();
 
         double dR = -(newRight - rightOdometerPosition) / countsPerInch;
-        double dL = (newLeft - leftOdometerPosition) / countsPerInch;
+        double dL = -(newLeft - leftOdometerPosition) / countsPerInch;
         double dN = (newNorm - normalOdometerPosition) / countsPerInch;
 
         double localDx = dN - (normalOffset * (dR - dL) / podDistance);

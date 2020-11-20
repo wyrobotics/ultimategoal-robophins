@@ -12,6 +12,8 @@ public class Drivebase {
     private DcMotor frontLeft, frontRight, backLeft, backRight;
     private double maxPower = 1;
 
+    private Telemetry telemetry;
+
     public Drivebase(HardwareMap hardwareMap, Telemetry telemetry) {
 
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
@@ -31,6 +33,8 @@ public class Drivebase {
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        this.telemetry = telemetry;
 
     }
 
@@ -52,29 +56,54 @@ public class Drivebase {
 
     }
 
+
     public void gotoPos(double x, double y, double theta) {
 
         double dx = x - GlobalPositioning.robotX;
         double dy = y - GlobalPositioning.robotY;
-        double dTheta = GlobalPositioning.robotTheta - theta;
+        double dTheta = theta - GlobalPositioning.robotTheta;
 
         double movementX, movementY, turningPower;
 
-        while(Math.hypot(dx, dy) > 0.3 || dTheta > 1) {
+        while(Math.hypot(dx, dy) > 2 || Math.abs(dTheta) > 0.3) {
 
-            movementX = dx / Math.max(Math.hypot(dx,dy), 1);
-            movementY = dy / Math.max(Math.hypot(dx,dy), 1);
-            turningPower = Math.signum(dTheta) * Math.max(1, Math.abs(dTheta));
+            movementX = dx / Math.max(Math.hypot(dx,dy), 8);
+            movementY = dy / Math.max(Math.hypot(dx,dy), 8);
+            turningPower = 0*Math.signum(dTheta) * Math.min(1, Math.abs(dTheta));
 
             discOrtho(movementX, movementY, turningPower);
 
             dx = x - GlobalPositioning.robotX;
             dy = y - GlobalPositioning.robotY;
-            dTheta = GlobalPositioning.robotTheta - theta;
+            dTheta = theta - GlobalPositioning.robotTheta;
+
+            telemetry.addData("Xpos: ",GlobalPositioning.robotX);
+            telemetry.addData("Ypos: ",GlobalPositioning.robotY);
+            telemetry.addData("Theta: ",GlobalPositioning.robotTheta);
+            telemetry.addData("dx: ",dx);
+            telemetry.addData("dy: ",dy);
+            telemetry.addData("dt: ",dTheta);
+            telemetry.update();
 
         }
 
         discOrtho(0,0,0);
+
+    }
+
+    public void timedMovement(double x, double y, double turningPower, double millis, double slowTime) {
+
+        double init = System.currentTimeMillis();
+
+        while(System.currentTimeMillis() < init + millis) {
+
+            double slowFactor = Math.min(1, (init + millis - System.currentTimeMillis()) / slowTime);
+
+            discOrtho(slowFactor * x, slowFactor * y, slowFactor * turningPower);
+
+        }
+
+        discOrtho(0, 0, 0);
 
     }
 
