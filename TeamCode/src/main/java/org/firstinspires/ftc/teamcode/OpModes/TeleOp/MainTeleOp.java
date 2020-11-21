@@ -34,9 +34,11 @@ public class MainTeleOp extends LinearOpMode {
                     gamepad1.right_bumper ? 1 : -69));
 
             if(gamepad1.dpad_up) {
-                mainRobot.shooter.setSetpoint(GlobalConfig.goalSpeed);
+                mainRobot.shooter.setpoint += 0.01;
+                mainRobot.shooter.simpleShoot(mainRobot.shooter.setpoint);
             } else if(gamepad1.dpad_down) {
-                mainRobot.shooter.setSetpoint(GlobalConfig.powerShotSpeed);
+                mainRobot.shooter.setpoint -= 0.01;
+                mainRobot.shooter.simpleShoot(mainRobot.shooter.setpoint);
             }
 
             if(!bDown && gamepad1.b) {
@@ -58,6 +60,9 @@ public class MainTeleOp extends LinearOpMode {
             } else if(aDown && !gamepad1.a) { aDown = false; }
 
         }
+
+        telemetry.addData("Motor Power: ", mainRobot.shooter.setpoint);
+        telemetry.update();
 
         mainRobot.odometryTracker.shutdownOdometry();
         //mainRobot.shooter.shutdownShooter();
