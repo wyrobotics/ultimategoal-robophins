@@ -12,7 +12,6 @@ import java.util.concurrent.ExecutorService;
 
 public class Shooter {
 
-    private ExecutorService shooterExecutor;
     private Boolean continueExecution = true;
 
     private DcMotor leftShooter;
@@ -70,7 +69,7 @@ public class Shooter {
 
     }
 
-    private Runnable shooterRunnable = new Runnable() {
+    public Runnable shooterRunnable = new Runnable() {
         @Override
         public void run() {
             continueExecution = true;
@@ -84,15 +83,8 @@ public class Shooter {
         }
     };
 
-    public void startShooter() {
-        shooterExecutor = ThreadPool.newSingleThreadExecutor("Shooter Thread");
-        shooterExecutor.execute(shooterRunnable);
-    }
-
     public void shutdownShooter() {
         continueExecution = false;
-        shooterExecutor.shutdownNow();
-        shooterExecutor = null;
     }
 
     private void sleep(double milliseconds) {

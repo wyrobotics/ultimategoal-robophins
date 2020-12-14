@@ -17,7 +17,6 @@ public class OdometryTracker {
     //TODO: NOT PUBLICCC
     public double rightOdometerPosition, leftOdometerPosition, normalOdometerPosition;
 
-    private ExecutorService odometryUpdaterExecutor;
     private Boolean continueExecution = true;
 
     Telemetry telemetry;
@@ -61,7 +60,7 @@ public class OdometryTracker {
 
     }
 
-    private Runnable odometryUpdaterRunnable = new Runnable() {
+    public Runnable odometryUpdaterRunnable = new Runnable() {
         @Override
         public void run() {
             continueExecution = true;
@@ -85,15 +84,8 @@ public class OdometryTracker {
 
     }
 
-    public void startOdometry() {
-        odometryUpdaterExecutor = ThreadPool.newSingleThreadExecutor("Odometry Updater");
-        odometryUpdaterExecutor.execute(odometryUpdaterRunnable);
-    }
-
     public void shutdownOdometry() {
         continueExecution = false;
-        odometryUpdaterExecutor.shutdownNow();
-        odometryUpdaterExecutor = null;
     }
 
 }
