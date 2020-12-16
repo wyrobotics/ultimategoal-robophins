@@ -72,6 +72,15 @@ public class Shooter {
 
     public void setSetpoint(double setpoint) { this.setpoint = setpoint; }
 
+    public double getShooterPower() { return leftShooter.getPower(); }
+    public double getShooterPower(int i) {
+        switch(i) {
+            case -1: return rightShooter.getPower();
+            case 0: return (leftShooter.getPower() + rightShooter.getPower()) / 2;
+            default: return leftShooter.getPower();
+        }
+    }
+
     private void shooterController(double integrator) {
 
         lastPos[0] = lastPos[1];
