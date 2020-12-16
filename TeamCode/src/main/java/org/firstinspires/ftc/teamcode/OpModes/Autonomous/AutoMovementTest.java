@@ -19,11 +19,11 @@ public class AutoMovementTest extends LinearOpMode {
 
         waitForStart();
 
-        mainRobot.odometryTracker.startOdometry();
+        mainRobot.hardwareThreadExecutor.initiateExecutor();
 
         mainRobot.drivebase.gotoPos(targetX,targetY,targetTheta);
 
-        mainRobot.odometryTracker.shutdownOdometry();
+        mainRobot.hardwareThreadExecutor.shutdownExecutor();
 
     }
 

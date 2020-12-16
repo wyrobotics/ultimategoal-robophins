@@ -18,7 +18,7 @@ public class MovementTest extends LinearOpMode {
 
         waitForStart();
 
-        mainRobot.odometryTracker.startOdometry();
+        mainRobot.hardwareThreadExecutor.initiateExecutor();
 
         while(opModeIsActive()) {
 

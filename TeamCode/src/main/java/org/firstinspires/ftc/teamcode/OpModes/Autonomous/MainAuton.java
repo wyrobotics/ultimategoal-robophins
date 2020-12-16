@@ -52,7 +52,7 @@ public class MainAuton extends LinearOpMode {
 
         waitForStart();
 
-        mainRobot.odometryTracker.startOdometry();
+        mainRobot.hardwareThreadExecutor.initiateExecutor();
         //mainRobot.shooter.startShooter();
 
             telemetry.addData("Stack Height:", stackHeight(contourArea));
@@ -96,15 +96,19 @@ public class MainAuton extends LinearOpMode {
 
         mainRobot.shooter.simpleShoot(0.87);
         mainRobot.deng(1000);
-        mainRobot.intake.intake();
-        mainRobot.deng(8000);
+        mainRobot.shooter.flick();
+        mainRobot.deng(1000);
+        mainRobot.shooter.flick();
+        mainRobot.deng(1000);
+        mainRobot.shooter.flick();
+        mainRobot.deng(1000);
+        //mainRobot.deng(8000);
 
-        mainRobot.intake.intake(0);
         mainRobot.shooter.simpleShoot(0);
 
         mainRobot.drivebase.timedMovement(0,0.5,0,1000,500);
 
-        mainRobot.odometryTracker.shutdownOdometry();
+        mainRobot.hardwareThreadExecutor.shutdownExecutor();
 
         mainRobot.drivebase.discOrtho(0,0,0);
 

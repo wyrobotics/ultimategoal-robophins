@@ -21,7 +21,7 @@ public class SampleTeleOp extends LinearOpMode {
 
         waitForStart();
 
-        mainRobot.odometryTracker.startOdometry();
+        mainRobot.hardwareThreadExecutor.initiateExecutor();
 
         while(opModeIsActive()) {
 
@@ -45,7 +45,7 @@ public class SampleTeleOp extends LinearOpMode {
 
         }
 
-        mainRobot.odometryTracker.shutdownOdometry();
+        mainRobot.hardwareThreadExecutor.shutdownExecutor();
 
     }
 

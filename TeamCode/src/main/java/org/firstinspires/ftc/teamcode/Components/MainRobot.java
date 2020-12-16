@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Components.Hardware.Drivebase;
 import org.firstinspires.ftc.teamcode.Components.Hardware.Intake;
+import org.firstinspires.ftc.teamcode.Components.Hardware.Ramp;
 import org.firstinspires.ftc.teamcode.Components.Hardware.Shooter;
 import org.firstinspires.ftc.teamcode.Components.Hardware.WobbleGoalArm;
 import org.firstinspires.ftc.teamcode.Components.Software.HardwareThreadExecutor;
@@ -16,12 +17,12 @@ import java.util.Arrays;
 public class  MainRobot {
 
     public Shooter shooter;
+    public Ramp ramp;
     public Intake intake;
     public WobbleGoalArm wobbleGoalArm;
     public Drivebase drivebase;
 
     public OdometryTracker odometryTracker;
-
     public HardwareThreadExecutor hardwareThreadExecutor;
 
     public MainRobot(HardwareMap hardwareMap, Telemetry telemetry) {

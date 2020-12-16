@@ -26,12 +26,12 @@ public class Turn extends LinearOpMode {
 
         waitForStart();
 
-        mainRobot.odometryTracker.startOdometry();
+        mainRobot.hardwareThreadExecutor.initiateExecutor();
 
 
         mainRobot.drivebase.timedMovement(0, 0, 0.5, 2275, 600);
 
-        mainRobot.odometryTracker.shutdownOdometry();
+        mainRobot.hardwareThreadExecutor.shutdownExecutor();
 
         mainRobot.drivebase.discOrtho(0,0,0);
 

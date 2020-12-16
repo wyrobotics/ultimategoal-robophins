@@ -14,6 +14,8 @@ public class MainTeleOp extends LinearOpMode {
 
     boolean aDown;
     boolean bDown;
+    boolean xDown;
+    boolean rightTab;
 
     @Override
     public void runOpMode() {
@@ -22,7 +24,7 @@ public class MainTeleOp extends LinearOpMode {
 
         waitForStart();
 
-        mainRobot.odometryTracker.startOdometry();
+        mainRobot.hardwareThreadExecutor.initiateExecutor();
         //mainRobot.shooter.startShooter();
 
         while(opModeIsActive()) {
@@ -59,12 +61,29 @@ public class MainTeleOp extends LinearOpMode {
                 }
             } else if(aDown && !gamepad1.a) { aDown = false; }
 
+            if(!rightTab && gamepad1.right_bumper) {
+                rightTab = true;
+                if (mainRobot.shooter.flicked) {
+                    mainRobot.shooter.unflick();
+                } else {
+                    mainRobot.shooter.flick();
+                }
+            } else if(rightTab && !gamepad1.right_bumper) { rightTab = false; }
+
+            if(!xDown && gamepad1.x) {
+                xDown = true;
+                mainRobot.ramp.moveRamp();
+            } else if(xDown && !gamepad1.x) {
+                xDown = false;
+                mainRobot.ramp.moveRamp(0);
+            }
+
         }
 
         telemetry.addData("Motor Power: ", mainRobot.shooter.setpoint);
         telemetry.update();
 
-        mainRobot.odometryTracker.shutdownOdometry();
+        mainRobot.hardwareThreadExecutor.shutdownExecutor();
         //mainRobot.shooter.shutdownShooter();
 
     }
