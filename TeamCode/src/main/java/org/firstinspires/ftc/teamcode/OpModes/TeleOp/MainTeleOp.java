@@ -35,6 +35,9 @@ public class MainTeleOp extends LinearOpMode {
             mainRobot.intake.intake(Math.max(gamepad1.right_trigger - gamepad1.left_trigger,
                     gamepad1.right_bumper ? 1 : -69));
 
+            mainRobot.ramp.moveRamp(Math.max(gamepad1.right_trigger - gamepad1.left_trigger,
+                    gamepad1.right_bumper ? 1 : -69));
+
             if(gamepad1.dpad_up) {
                 mainRobot.shooter.setpoint += 0.01;
                 mainRobot.shooter.simpleShoot(mainRobot.shooter.setpoint);
@@ -69,14 +72,6 @@ public class MainTeleOp extends LinearOpMode {
                     mainRobot.shooter.flick();
                 }
             } else if(rightTab && !gamepad1.right_bumper) { rightTab = false; }
-
-            if(!xDown && gamepad1.x) {
-                xDown = true;
-                mainRobot.ramp.moveRamp();
-            } else if(xDown && !gamepad1.x) {
-                xDown = false;
-                mainRobot.ramp.moveRamp(0);
-            }
 
         }
 
