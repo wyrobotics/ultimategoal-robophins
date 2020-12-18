@@ -81,7 +81,7 @@ public class Shooter {
         }
     }
 
-    private void shooterController(double integrator) {
+    public void shooterController(double integrator) {
 
         lastPos[0] = lastPos[1];
         lastPos[1] = lastPos[2];
