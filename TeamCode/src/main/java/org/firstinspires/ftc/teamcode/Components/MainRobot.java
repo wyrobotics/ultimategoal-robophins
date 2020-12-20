@@ -31,6 +31,7 @@ public class  MainRobot {
         intake = new Intake(hardwareMap, telemetry);
         wobbleGoalArm = new WobbleGoalArm(hardwareMap, telemetry);
         drivebase = new Drivebase(hardwareMap, telemetry);
+        ramp = new Ramp(hardwareMap, telemetry);
 
         odometryTracker = new OdometryTracker(hardwareMap, telemetry);
 
@@ -43,7 +44,14 @@ public class  MainRobot {
         double init = System.currentTimeMillis();
         while(System.currentTimeMillis() < init + millis) { }
     }
-
+    public void jig(int n) {
+        for(int i = 0; i < n; i++) {
+            drivebase.timedMovement(0, .5, 0, 150, 50);
+            deng(50);
+            drivebase.timedMovement(0, -.5, 0, 150, 50);
+            deng(50);
+        }
+    }
     public void closeAllThreads() {
         odometryTracker.shutdownOdometry();
         shooter.shutdownShooter();

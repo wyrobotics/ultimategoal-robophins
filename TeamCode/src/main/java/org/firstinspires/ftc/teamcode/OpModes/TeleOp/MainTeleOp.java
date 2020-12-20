@@ -15,7 +15,17 @@ public class MainTeleOp extends LinearOpMode {
     boolean aDown;
     boolean bDown;
     boolean xDown;
-    boolean rightTab;
+    boolean leftTab;
+
+    boolean shooterController = false;
+
+    int shootIndex = 0;
+    double speed = 0; //variable for shooter speed
+
+    double topGoalSpeed = 0.9;
+    double powerShotSpeed = 0.8;
+
+    double[] shooterSpeeds = new double[] {0, topGoalSpeed, powerShotSpeed};
 
     @Override
     public void runOpMode() {
@@ -27,17 +37,49 @@ public class MainTeleOp extends LinearOpMode {
         mainRobot.hardwareThreadExecutor.initiateExecutor();
         //mainRobot.shooter.startShooter();
 
+        double integrator = 0;
+
+        mainRobot.shooter.setpoint = 3200;
+
+        mainRobot.shooter.initPos();
+
+        mainRobot.shooter.teleLastTime = System.currentTimeMillis();
+
         while(opModeIsActive()) {
 
-            mainRobot.drivebase.discOrtho(this.gamepad1.right_stick_x, this.gamepad1.right_stick_y,
-                    this.gamepad1.left_stick_x);
-
+            mainRobot.drivebase.discOrtho(-this.gamepad1.left_stick_x, -this.gamepad1.left_stick_y,
+                    this.gamepad1.right_stick_x);
+/*
             mainRobot.intake.intake(Math.max(gamepad1.right_trigger - gamepad1.left_trigger,
                     gamepad1.right_bumper ? 1 : -69));
 
-            mainRobot.ramp.moveRamp(Math.max(gamepad1.right_trigger - gamepad1.left_trigger,
-                    gamepad1.right_bumper ? 1 : -69));
+            mainRobot.ramp.moveRamp(gamepad1.right_bumper ? 1 : 0);
 
+            mainRobot.ramp.moveRamp(gamepad1.left_bumper ? -1 : 0); */
+
+            //ANTHONY CODE ANTHONY CODE
+            if(gamepad1.right_bumper) {
+                mainRobot.ramp.moveRamp(1);
+                mainRobot.intake.intake(1);
+            } //set ramp and intake to go up if right bumper is down
+            else if(gamepad1.right_trigger > 0) {
+                mainRobot.ramp.moveRamp(-1);
+                mainRobot.intake.intake(-1);
+            } //if right bumper is not down and right trigger is compressed, set ramp and intake to down
+            else {
+                mainRobot.ramp.moveRamp(0);
+                mainRobot.intake.intake(0);
+            } //if neither right trigger nor right bumper are compressed, set ramp and intake to off
+
+            if (gamepad1.dpad_down) {speed = .69;} //if dpad is down, set shooting speed to power shot speed
+            else if(gamepad1.dpad_left || gamepad1.dpad_right) {speed = .72;} //medium speed
+            else if(gamepad1.dpad_up) {speed = .8;} //if dpad is up and also not down, set shooting speed to top goal speed
+            else if(gamepad1.x) {speed = 0;} //if neither dpad up nor dpad down are pressed, and x is pressed, set shooting speed to zero
+
+            mainRobot.shooter.simpleShoot(speed); //set shooter motors to shooting speed as described above lulw git rekt documentation kekw
+            //END ANTHONY CODE ANTHONY CODE
+
+            /*
             if(gamepad1.dpad_up) {
                 mainRobot.shooter.setpoint += 0.01;
                 mainRobot.shooter.simpleShoot(mainRobot.shooter.setpoint);
@@ -45,6 +87,18 @@ public class MainTeleOp extends LinearOpMode {
                 mainRobot.shooter.setpoint -= 0.01;
                 mainRobot.shooter.simpleShoot(mainRobot.shooter.setpoint);
             }
+
+
+
+            if(shooterController) {
+                mainRobot.shooter.shooterController(integrator);
+            } else {
+                mainRobot.shooter.simpleShoot(0);
+                mainRobot.shooter.initPos();
+                integrator = 0;
+            }
+
+             */
 
             if(!bDown && gamepad1.b) {
                 bDown = true;
@@ -64,19 +118,33 @@ public class MainTeleOp extends LinearOpMode {
                 }
             } else if(aDown && !gamepad1.a) { aDown = false; }
 
-            if(!rightTab && gamepad1.right_bumper) {
-                rightTab = true;
-                if (mainRobot.shooter.flicked) {
-                    mainRobot.shooter.unflick();
-                } else {
-                    mainRobot.shooter.flick();
-                }
-            } else if(rightTab && !gamepad1.right_bumper) { rightTab = false; }
+            if(!leftTab && gamepad1.left_bumper) {
+                leftTab = true;
+                mainRobot.shooter.flick();
+            } else if(leftTab && !gamepad1.left_bumper) {
+                leftTab = false;
+                mainRobot.shooter.unflick();
+            }
+
+
+/*
+            if(gamepad1.x && !xDown) {
+                shootIndex += 1;
+                mainRobot.shooter.simpleShoot(shooterSpeeds[shootIndex % 3]);
+            } else if(xDown && !gamepad1.x) {
+                xDown = false;
+            }
+
+            telemetry.addData("Shooter speed: ", shootIndex == 0 ? "Zero" :
+                            (shootIndex == 1 ? "Top Goal" : "Power Shot"));
+*/
+
+
+            mainRobot.deng(10);
 
         }
 
-        telemetry.addData("Motor Power: ", mainRobot.shooter.setpoint);
-        telemetry.update();
+
 
         mainRobot.hardwareThreadExecutor.shutdownExecutor();
         //mainRobot.shooter.shutdownShooter();

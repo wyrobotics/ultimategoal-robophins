@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Autonomous
-public class MainAuton extends LinearOpMode {
+public class MainAutonHigh extends LinearOpMode {
 
     private MainRobot mainRobot;
 
@@ -42,11 +42,11 @@ public class MainAuton extends LinearOpMode {
 
         phoneCam.openCameraDevice();
 
-        phoneCam.setPipeline(new MainAuton.Pipeline());
+        phoneCam.setPipeline(new MainAutonHigh.Pipeline());
 
         phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
 
-        phoneCam.setFlashlightEnabled(true);
+        //phoneCam.setFlashlightEnabled(true);
 
         mainRobot.wobbleGoalArm.grab();
 
@@ -94,13 +94,23 @@ public class MainAuton extends LinearOpMode {
         mainRobot.drivebase.turn180();
         mainRobot.deng(1000);
 
-        mainRobot.shooter.simpleShoot(0.87);
+
+        //THIS VALUE iS THE power fOR THE SHots (the oNE IN simpleshoot that says power)
+        mainRobot.shooter.simpleShoot(0.8);
         mainRobot.deng(1000);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
+        mainRobot.shooter.unflick();;
+        mainRobot.deng(50);
+        mainRobot.jig(2);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
+        mainRobot.shooter.unflick();
+        mainRobot.deng(50);
+        mainRobot.jig(2);
         mainRobot.shooter.flick();
+        mainRobot.deng(1000);
+        mainRobot.shooter.unflick();
         mainRobot.deng(1000);
         //mainRobot.deng(8000);
 

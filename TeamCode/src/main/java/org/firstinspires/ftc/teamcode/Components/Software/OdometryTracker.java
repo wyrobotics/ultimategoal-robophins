@@ -23,7 +23,7 @@ public class OdometryTracker {
 
     public OdometryTracker(HardwareMap hardwareMap, Telemetry telemetry) {
 
-        rightOdometer = hardwareMap.get(DcMotor.class, "rightOdometer");
+        rightOdometer = hardwareMap.get(DcMotor.class, "rampMotor");
         leftOdometer = hardwareMap.get(DcMotor.class, "leftShooter");
         normalOdometer = hardwareMap.get(DcMotor.class, "intakeMotor");
 

@@ -13,6 +13,8 @@ import java.util.concurrent.ExecutorService;
 
 public class Shooter {
 
+    Telemetry telemetry;
+
     private Boolean continueExecution = true;
     private Boolean runController = false;
 
@@ -24,10 +26,19 @@ public class Shooter {
 
     //private DigitalChannel shooterSwitch;
 
+    //1440 ppr
+    //setpoint in ticks/sec
     public double setpoint = 0;
     private double[] lastPos = new double[3];
 
-    private double kP = 0, kI = 0, kD = 0;
+    private double shooterPower = 0;
+
+    private double kP = 0.00001, kI = 0, kD = 0;
+
+    public double lastTime;
+    public double lastCount;
+
+    public double teleLastTime = 0;
 
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
 
@@ -41,6 +52,8 @@ public class Shooter {
 
         rightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        this.telemetry = telemetry;
+
         //Right shooter has encoder
 
         //shooterSwitch = hardwareMap.get(DigitalChannel.class, "shooterSwitch");
@@ -53,22 +66,35 @@ public class Shooter {
     }
 
     public void unflick() {
-        flicker.setPosition(0.2);
+        flicker.setPosition(0.4);
         flicked = false;
     }
 
     public void simpleShoot() {
         leftShooter.setPower(0.8);
         rightShooter.setPower(0.8);
+        shooterPower = 0.8;
     }
 
     public void simpleShoot(double power) {
         leftShooter.setPower(power);
         rightShooter.setPower(power);
+        shooterPower = power;
     }
 
     public void enableController() { runController = true; }
     public void disableController() { runController = false; }
+
+    public double getRPM() {
+        double newPos = rightShooter.getCurrentPosition();
+        double newTime = System.currentTimeMillis();
+        double result = (newPos - lastCount) / (newTime - lastTime);
+
+        lastCount = newPos;
+        lastTime = newTime;
+
+        return result;
+    }
 
     public void setSetpoint(double setpoint) { this.setpoint = setpoint; }
 
@@ -81,20 +107,42 @@ public class Shooter {
         }
     }
 
+    public void initPos() {
+
+        lastPos[0] = rightShooter.getCurrentPosition();
+        sleep(10);
+        lastPos[1] = rightShooter.getCurrentPosition();
+        sleep(10);
+        lastPos[2] = rightShooter.getCurrentPosition();
+
+    }
+
     public void shooterController(double integrator) {
 
         lastPos[0] = lastPos[1];
         lastPos[1] = lastPos[2];
         lastPos[2] = rightShooter.getCurrentPosition();
 
-        double e = setpoint - ((lastPos[2] - lastPos[1]) / 0.01);
+        double newTime = System.currentTimeMillis();
 
-        integrator += e * 0.01;
+        double dt = (newTime - teleLastTime) / 1000;
 
-        double u = (kP * e) + (kI * integrator) + (kD * (e - (setpoint - ((lastPos[1] - lastPos[10]) / 0.01))) / 0.01);
+        double e = setpoint - ((lastPos[2] - lastPos[1]) / dt);
 
-        rightShooter.setPower(u);
-        leftShooter.setPower(u);
+        integrator += e * dt;
+
+        double u = (kP * e) + (kI * integrator) + (kD * (e - (setpoint - ((lastPos[1] - lastPos[0]) / dt))) / dt);
+
+        shooterPower = Math.max(-1, Math.min(1, shooterPower + u));
+
+        telemetry.addData("e: ", e);
+        telemetry.addData("u: ", u);
+        telemetry.addData("Shooter power: ", shooterPower);
+
+        rightShooter.setPower(shooterPower);
+        leftShooter.setPower(shooterPower);
+
+        lastTime = newTime;
 
     }
 

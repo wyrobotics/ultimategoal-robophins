@@ -31,6 +31,8 @@ public class ShooterControllerTest extends LinearOpMode {
 
         }
 
+        mainRobot.hardwareThreadExecutor.shutdownExecutor();
+
     }
 
 }
