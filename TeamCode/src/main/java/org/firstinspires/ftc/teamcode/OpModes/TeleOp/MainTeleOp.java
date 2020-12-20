@@ -77,6 +77,8 @@ public class MainTeleOp extends LinearOpMode {
             else if(gamepad1.x) {speed = 0;} //if neither dpad up nor dpad down are pressed, and x is pressed, set shooting speed to zero
 
             mainRobot.shooter.simpleShoot(speed); //set shooter motors to shooting speed as described above lulw git rekt documentation kekw
+
+            if (gamepad1.y) {mainRobot.jig(1);} //jiggle once
             //END ANTHONY CODE ANTHONY CODE
 
             /*
