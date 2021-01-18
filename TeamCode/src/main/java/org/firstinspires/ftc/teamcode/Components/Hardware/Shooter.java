@@ -16,7 +16,7 @@ public class Shooter {
     Telemetry telemetry;
 
     private Boolean continueExecution = true;
-    private Boolean runController = false;
+    private volatile Boolean runController = false;
 
     private DcMotor leftShooter;
     private DcMotor rightShooter;
@@ -28,7 +28,7 @@ public class Shooter {
 
     //1440 ppr
     //setpoint in ticks/sec
-    public double setpoint = 0;
+    public volatile double setpoint = 0;
     private double[] lastPos = new double[3];
 
     private double shooterPower = 0;
@@ -125,7 +125,7 @@ public class Shooter {
 
         double newTime = System.currentTimeMillis();
 
-        double dt = (newTime - teleLastTime) / 1000;
+        double dt = (newTime - lastTime) / 1000;
 
         double e = setpoint - ((lastPos[2] - lastPos[1]) / dt);
 
@@ -138,6 +138,10 @@ public class Shooter {
         telemetry.addData("e: ", e);
         telemetry.addData("u: ", u);
         telemetry.addData("Shooter power: ", shooterPower);
+        telemetry.addData("ticks per sec: ", ((lastPos[2] - lastPos[1]) / dt));
+        telemetry.addData("lastPos[1]: ", lastPos[1]);
+        telemetry.addData("lastPos[2]: ", lastPos[2]);
+        telemetry.addData("dt: ", dt);
 
         rightShooter.setPower(shooterPower);
         leftShooter.setPower(shooterPower);
@@ -155,7 +159,7 @@ public class Shooter {
             double integrator = 0;
             while(continueExecution && !Thread.currentThread().isInterrupted()) {
                 if(runController) { shooterController(integrator); }
-                sleep(10);
+                sleep(200);
             }
         }
     };

@@ -39,11 +39,13 @@ public class MainTeleOp extends LinearOpMode {
 
         double integrator = 0;
 
-        mainRobot.shooter.setpoint = 3200;
+        mainRobot.shooter.setpoint = 800;
 
         mainRobot.shooter.initPos();
 
         mainRobot.shooter.teleLastTime = System.currentTimeMillis();
+
+        mainRobot.shooter.enableController();
 
         while(opModeIsActive()) {
 
@@ -71,12 +73,14 @@ public class MainTeleOp extends LinearOpMode {
                 mainRobot.intake.intake(0);
             } //if neither right trigger nor right bumper are compressed, set ramp and intake to off
 
+            /*
             if (gamepad1.dpad_down) {speed = .69;} //if dpad is down, set shooting speed to power shot speed
             else if(gamepad1.dpad_left || gamepad1.dpad_right) {speed = .72;} //medium speed
             else if(gamepad1.dpad_up) {speed = .8;} //if dpad is up and also not down, set shooting speed to top goal speed
             else if(gamepad1.x) {speed = 0;} //if neither dpad up nor dpad down are pressed, and x is pressed, set shooting speed to zero
 
             mainRobot.shooter.simpleShoot(speed); //set shooter motors to shooting speed as described above lulw git rekt documentation kekw
+            */
 
             if (gamepad1.y) {mainRobot.jig(1);} //jiggle once
             //END ANTHONY CODE ANTHONY CODE
@@ -141,13 +145,14 @@ public class MainTeleOp extends LinearOpMode {
                             (shootIndex == 1 ? "Top Goal" : "Power Shot"));
 */
 
-
+            telemetry.update();
             mainRobot.deng(10);
 
         }
 
 
-
+        mainRobot.shooter.disableController();
+        mainRobot.shooter.shutdownShooter();
         mainRobot.hardwareThreadExecutor.shutdownExecutor();
         //mainRobot.shooter.shutdownShooter();
 
