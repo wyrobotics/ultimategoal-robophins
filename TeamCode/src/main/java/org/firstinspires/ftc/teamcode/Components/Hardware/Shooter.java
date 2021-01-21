@@ -15,8 +15,8 @@ public class Shooter {
 
     Telemetry telemetry;
 
-    private Boolean continueExecution = true;
-    private volatile Boolean runController = false;
+    private Boolean continueExecution = true; //thread
+    private volatile Boolean runController = false; //pid
 
     private DcMotor leftShooter;
     private DcMotor rightShooter;
@@ -33,7 +33,7 @@ public class Shooter {
 
     private double shooterPower = 0;
 
-    private double kP = 0.00001, kI = 0, kD = 0;
+    private double kP = 0.0001, kI = 0, kD = 0;
 
     public double lastTime;
     public double lastCount;

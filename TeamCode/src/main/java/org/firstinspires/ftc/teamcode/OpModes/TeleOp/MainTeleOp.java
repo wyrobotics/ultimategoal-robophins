@@ -39,7 +39,7 @@ public class MainTeleOp extends LinearOpMode {
 
         double integrator = 0;
 
-        mainRobot.shooter.setpoint = 800;
+        mainRobot.shooter.setpoint = 0;
 
         mainRobot.shooter.initPos();
 
@@ -85,26 +85,10 @@ public class MainTeleOp extends LinearOpMode {
             if (gamepad1.y) {mainRobot.jig(1);} //jiggle once
             //END ANTHONY CODE ANTHONY CODE
 
-            /*
-            if(gamepad1.dpad_up) {
-                mainRobot.shooter.setpoint += 0.01;
-                mainRobot.shooter.simpleShoot(mainRobot.shooter.setpoint);
-            } else if(gamepad1.dpad_down) {
-                mainRobot.shooter.setpoint -= 0.01;
-                mainRobot.shooter.simpleShoot(mainRobot.shooter.setpoint);
-            }
-
-
-
-            if(shooterController) {
-                mainRobot.shooter.shooterController(integrator);
-            } else {
-                mainRobot.shooter.simpleShoot(0);
-                mainRobot.shooter.initPos();
-                integrator = 0;
-            }
-
-             */
+            if(gamepad1.dpad_down) { mainRobot.shooter.setpoint = 800;} //power shot
+            else if(gamepad1.dpad_left || gamepad1.dpad_right) { mainRobot.shooter.setpoint = 850; }
+            else if(gamepad1.dpad_up) { mainRobot.shooter.setpoint = 900; } //high goal
+            else if(gamepad1.x) { mainRobot.shooter.setpoint = 0; }
 
             if(!bDown && gamepad1.b) {
                 bDown = true;
