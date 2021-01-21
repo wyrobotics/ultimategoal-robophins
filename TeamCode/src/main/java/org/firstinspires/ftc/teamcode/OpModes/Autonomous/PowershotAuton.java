@@ -95,7 +95,7 @@ public class PowershotAuton extends LinearOpMode {
         }
         mainRobot.deng(500);
 
-        if(height == 2) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 2000, 500); }
+        if(height == 2) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 2250, 500); }
         if(height == 1) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 1000, 500); }
         mainRobot.deng(500);
 
