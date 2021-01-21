@@ -50,6 +50,12 @@ public class PowershotAuton extends LinearOpMode {
 
         mainRobot.wobbleGoalArm.grab();
 
+        mainRobot.shooter.setpoint = 0;
+
+        mainRobot.shooter.initPos();
+
+        mainRobot.shooter.enableController();
+
         waitForStart();
 
         mainRobot.hardwareThreadExecutor.initiateExecutor();
@@ -80,34 +86,36 @@ public class PowershotAuton extends LinearOpMode {
         mainRobot.wobbleGoalArm.down();
         mainRobot.deng(1000);
 
-        if(height != 1) {
-            mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1750, 500);
-            mainRobot.deng(500);
+        if(height == 0) {
+            mainRobot.drivebase.timedMovement(-0.5, 0, 0, 2800, 750);
+        } else if(height == 1) {
+            mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1100, 500);
+        } else {
+            mainRobot.drivebase.timedMovement(-0.5, 0, 0, 2500, 750);
         }
-
-        if(height == 2) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 2500, 500); }
-        if(height == 1) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 1500, 500); }
         mainRobot.deng(500);
 
-
+        if(height == 2) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 2000, 500); }
+        if(height == 1) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 1000, 500); }
+        mainRobot.deng(500);
 
         mainRobot.drivebase.turn180();
         mainRobot.deng(1000);
 
 
         //THIS VALUE iS THE power fOR THE SHots (the oNE IN simpleshoot that says power)
-        mainRobot.shooter.simpleShoot(0.8);
-        mainRobot.deng(1000);
-        mainRobot.shooter.flick();
-        mainRobot.deng(1000);
-        mainRobot.shooter.unflick();;
-        mainRobot.deng(50);
-        mainRobot.jig(2);
+        mainRobot.shooter.setpoint = 720;
+        mainRobot.deng(5000);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
-        mainRobot.jig(2);
+        mainRobot.drivebase.timedMovement(0.2,0,0,1800,500);
+        mainRobot.shooter.flick();
+        mainRobot.deng(1000);
+        mainRobot.shooter.unflick();
+        mainRobot.deng(50);
+        mainRobot.drivebase.timedMovement(0.2,0,0,1800,500);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
@@ -121,6 +129,10 @@ public class PowershotAuton extends LinearOpMode {
         mainRobot.hardwareThreadExecutor.shutdownExecutor();
 
         mainRobot.drivebase.discOrtho(0,0,0);
+
+        mainRobot.shooter.disableController();
+        mainRobot.shooter.shutdownShooter();
+        mainRobot.hardwareThreadExecutor.shutdownExecutor();
 
     }
 
