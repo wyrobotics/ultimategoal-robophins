@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Autonomous
-public class MainAutonHigh extends LinearOpMode {
+public class PIDAutonHigh extends LinearOpMode {
 
     private MainRobot mainRobot;
 
@@ -42,7 +42,7 @@ public class MainAutonHigh extends LinearOpMode {
 
         phoneCam.openCameraDevice();
 
-        phoneCam.setPipeline(new MainAutonHigh.Pipeline());
+        phoneCam.setPipeline(new PIDAutonHigh.Pipeline());
 
         phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
 
@@ -50,65 +50,80 @@ public class MainAutonHigh extends LinearOpMode {
 
         mainRobot.wobbleGoalArm.grab();
 
+        mainRobot.shooter.setpoint = 0;
+
+        mainRobot.shooter.initPos();
+
+        mainRobot.shooter.enableController();
+
         waitForStart();
 
         mainRobot.hardwareThreadExecutor.initiateExecutor();
         //mainRobot.shooter.startShooter();
+        telemetry.addData("Stack Height:", stackHeight(contourArea));
+        double height = stackHeight(contourArea);
+        telemetry.update();
 
-            telemetry.addData("Stack Height:", stackHeight(contourArea));
-            double height = stackHeight(contourArea);
-            telemetry.update();
+        phoneCam.stopStreaming();
+        //phoneCam.closeCameraDevice(); stop open cv
 
-            phoneCam.stopStreaming();
-            //phoneCam.closeCameraDevice();
 
-            //strafe after detection
-            mainRobot.drivebase.timedMovement(0.5, 0, 0, 1500, 500);
+        //strafe after detection
+        mainRobot.drivebase.timedMovement(0.5, 0, 0, 1500, 500);
+        mainRobot.deng(500);
+
+
+        //move forward according to ring height
+        mainRobot.drivebase.timedMovement(0,-0.75,0,2500 + (height * 750),500);
+        mainRobot.deng(500);
+
+
+        //onestack strafe
+        if(height == 1) {
+            mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1750, 500);
             mainRobot.deng(500);
+        }
 
-            //go forward according to stack
-            mainRobot.drivebase.timedMovement(0,-0.75,0,2500 + (height * 750),500);
-            mainRobot.deng(500);
-
-            if(height == 1) {
-                mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1750, 500);
-                mainRobot.deng(500);
-            }
-
-            mainRobot.wobbleGoalArm.lift();
-            mainRobot.deng(1000);
-            mainRobot.wobbleGoalArm.release();
-            mainRobot.deng(500);
-            mainRobot.wobbleGoalArm.down();
-            mainRobot.deng(1000);
-
-            if(height != 1) {
-                mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1750, 500);
-                mainRobot.deng(500);
-            }
-
-            if(height == 2) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 2500, 500); }
-            if(height == 1) { mainRobot.drivebase.timedMovement(0, 0.5, 0, 1500, 500); }
-            mainRobot.deng(500);
-
-
-        //the turn is good for 1 and 2 but not 0 because the error accumulates on those two
-        mainRobot.drivebase.turn180();
+        mainRobot.wobbleGoalArm.lift();
         mainRobot.deng(1000);
+        mainRobot.wobbleGoalArm.release();
+        mainRobot.deng(500);
+        mainRobot.wobbleGoalArm.down();
+        mainRobot.deng(1000);
+
+        //for height 2 it overshoots to the left
+        if(height != 1) {
+            mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1300, 500);
+            mainRobot.deng(500);
+        }
+        int ms = 2250;
+        if (height == 0) {ms = 2200;}
+        mainRobot.drivebase.turn180LessCorrection(ms);
+
+        //move back
+        if(height == 2) { mainRobot.drivebase.timedMovement(0, -0.5, 0, 2500, 500); }
+        if(height == 1) { mainRobot.drivebase.timedMovement(0, -0.5, 0, 1500, 500); }
+        mainRobot.deng(500);
+
+        //the turn is good for 1 and 2 but not zero
+
 
 
         //THIS VALUE iS THE power fOR THE SHots (the oNE IN simpleshoot that says power)
-        mainRobot.shooter.simpleShoot(0.8);
-        mainRobot.deng(1000);
+        //try 905 is 900 is a bit low, it sometimes goes too low (not sure relate to boltage or not) but never overshoots
+        mainRobot.shooter.setpoint = 900;
+        mainRobot.deng(5500);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
-        mainRobot.shooter.unflick();;
+        mainRobot.shooter.unflick();
         mainRobot.deng(50);
+
         mainRobot.jig(2);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
+
         mainRobot.jig(2);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
@@ -116,13 +131,17 @@ public class MainAutonHigh extends LinearOpMode {
         mainRobot.deng(1000);
         //mainRobot.deng(8000);
 
-        mainRobot.shooter.simpleShoot(0);
 
         mainRobot.drivebase.timedMovement(0,0.5,0,1000,500);
+        mainRobot.shooter.simpleShoot(0);
 
         mainRobot.hardwareThreadExecutor.shutdownExecutor();
 
         mainRobot.drivebase.discOrtho(0,0,0);
+
+        mainRobot.shooter.disableController();
+        mainRobot.shooter.shutdownShooter();
+        mainRobot.hardwareThreadExecutor.shutdownExecutor();
 
     }
 

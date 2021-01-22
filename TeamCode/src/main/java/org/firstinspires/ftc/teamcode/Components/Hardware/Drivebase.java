@@ -109,4 +109,5 @@ public class Drivebase {
 
     public void turn180() { timedMovement(0, 0, 0.5, 2163, 600); }
 
+    public void turn180LessCorrection(int ms) { timedMovement(0, 0, 0.5, ms, 600); }
 }

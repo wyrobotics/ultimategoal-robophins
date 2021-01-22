@@ -66,13 +66,18 @@ public class PowershotAuton extends LinearOpMode {
         telemetry.update();
 
         phoneCam.stopStreaming();
-        //phoneCam.closeCameraDevice();
+        //phoneCam.closeCameraDevice(); stop open cv
 
+
+        //strafe after detection
         mainRobot.drivebase.timedMovement(0.5, 0, 0, 1500, 500);
         mainRobot.deng(500);
 
+
+        //move forward according to ring height
         mainRobot.drivebase.timedMovement(0,-0.75,0,2500 + (height * 750),500);
         mainRobot.deng(500);
+
 
         if(height == 1) {
             mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1750, 500);
@@ -104,18 +109,26 @@ public class PowershotAuton extends LinearOpMode {
 
 
         //THIS VALUE iS THE power fOR THE SHots (the oNE IN simpleshoot that says power)
+
+        //1 shoots good usually
         mainRobot.shooter.setpoint = 720;
         mainRobot.deng(5000);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
-        mainRobot.drivebase.timedMovement(0.2,0,0,1800,500);
+        mainRobot.drivebase.timedMovement(0.2,0,0,1500,500);
+
+        //2 is consistently shooting too high
+        mainRobot.shooter.setpoint = 700;
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
-        mainRobot.drivebase.timedMovement(0.2,0,0,1800,500);
+        mainRobot.drivebase.timedMovement(0.2,0,0,1500,500);
+
+        //3 usually shoots ok but a bit high
+        mainRobot.shooter.setpoint = 715;
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
