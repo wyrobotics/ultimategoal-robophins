@@ -91,7 +91,7 @@ public class PIDAutonHigh extends LinearOpMode {
         mainRobot.wobbleGoalArm.down();
         mainRobot.deng(1000);
 
-        //for height 2 it overshoots to the left
+        //millisecond value for this is lower; maybe update other to be better but it was overshooting to the left
         if(height != 1) {
             mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1300, 500);
             mainRobot.deng(500);
