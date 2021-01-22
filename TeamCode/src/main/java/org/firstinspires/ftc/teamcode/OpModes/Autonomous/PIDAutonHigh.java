@@ -129,9 +129,8 @@ public class PIDAutonHigh extends LinearOpMode {
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(1000);
-        //mainRobot.deng(8000);
 
-
+        //park on the line
         mainRobot.drivebase.timedMovement(0,0.5,0,1000,500);
         mainRobot.shooter.simpleShoot(0);
 
