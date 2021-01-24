@@ -86,8 +86,8 @@ public class MainTeleOp extends LinearOpMode {
             //END ANTHONY CODE ANTHONY CODE
 
             if(gamepad1.dpad_down) { mainRobot.shooter.setpoint = 800;} //power shot
-            else if(gamepad1.dpad_left || gamepad1.dpad_right) { mainRobot.shooter.setpoint = 850; }
-            else if(gamepad1.dpad_up) { mainRobot.shooter.setpoint = 900; } //high goal
+            else if(gamepad1.dpad_left || gamepad1.dpad_right) { mainRobot.shooter.setpoint = 840; }
+            else if(gamepad1.dpad_up) { mainRobot.shooter.setpoint = 880; } //high goal
             else if(gamepad1.x) { mainRobot.shooter.setpoint = 0; }
 
             if(!bDown && gamepad1.b) {

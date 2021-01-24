@@ -76,7 +76,7 @@ public class MainAutonHigh extends LinearOpMode {
             }
 
             mainRobot.wobbleGoalArm.lift();
-            mainRobot.deng(1000);
+            mainRobot.deng(2000);
             mainRobot.wobbleGoalArm.release();
             mainRobot.deng(500);
             mainRobot.wobbleGoalArm.down();
@@ -110,10 +110,12 @@ public class MainAutonHigh extends LinearOpMode {
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
         mainRobot.jig(2);
+        mainRobot.deng(1000);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(1000);
+        mainRobot.drivebase.turn180();
         //mainRobot.deng(8000);
 
         mainRobot.shooter.simpleShoot(0);

@@ -86,23 +86,39 @@ public class PIDAutonHigh extends LinearOpMode {
 
         mainRobot.wobbleGoalArm.lift();
         mainRobot.deng(1000);
+        if(height != 2) { mainRobot.deng(1000); }
         mainRobot.wobbleGoalArm.release();
         mainRobot.deng(500);
         mainRobot.wobbleGoalArm.down();
         mainRobot.deng(1000);
 
         //millisecond value for this is lower; maybe update other to be better but it was overshooting to the left
-        if(height != 1) {
+        if(height == 0) {
             mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1300, 500);
             mainRobot.deng(500);
         }
+        if(height == 2) {
+            mainRobot.drivebase.timedMovement(-0.5, 0, 0, 1300, 500);
+            mainRobot.deng(500);
+        }
+        /*
         int ms = 2250;
         if (height == 0) {ms = 2200;}
-        mainRobot.drivebase.turn180LessCorrection(ms);
+        mainRobot.drivebase.turn180LessCorrection(ms);*/
+        mainRobot.drivebase.turn180tweak(0);
 
         //move back
-        if(height == 2) { mainRobot.drivebase.timedMovement(0, -0.5, 0, 2500, 500); }
-        if(height == 1) { mainRobot.drivebase.timedMovement(0, -0.5, 0, 1500, 500); }
+        if(height == 2) {
+            mainRobot.drivebase.timedMovement(0, -0.5, 0, 2700, 500);
+            mainRobot.drivebase.timedMovement(.3,0,0,800,50);}
+        if(height == 1) {
+            mainRobot.drivebase.timedMovement(0, -0.5, 0, 1600, 500);
+            mainRobot.drivebase.timedMovement(.3,0,0,500,50);}
+        if(height == 0) {
+            mainRobot.drivebase.timedMovement(0, -0.5, 0, 200, 50);
+            mainRobot.drivebase.timedMovement(.3,0,0,500,50);}
+
+        //mainRobot.drivebase.timedMovement(.3,0,0,500,50);
         mainRobot.deng(500);
 
         //the turn is good for 1 and 2 but not zero
@@ -111,15 +127,17 @@ public class PIDAutonHigh extends LinearOpMode {
 
         //THIS VALUE iS THE power fOR THE SHots (the oNE IN simpleshoot that says power)
         //try 905 is 900 is a bit low, it sometimes goes too low (not sure relate to boltage or not) but never overshoots
-        mainRobot.shooter.setpoint = 900;
+        mainRobot.shooter.setpoint = 925;
         mainRobot.deng(5500);
         mainRobot.shooter.flick();
+        mainRobot.shooter.setpoint = 900;
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
 
         mainRobot.jig(2);
         mainRobot.shooter.flick();
+        mainRobot.shooter.setpoint = 890;
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
