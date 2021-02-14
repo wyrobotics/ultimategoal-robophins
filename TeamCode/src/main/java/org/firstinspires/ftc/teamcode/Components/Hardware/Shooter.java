@@ -33,7 +33,7 @@ public class Shooter {
 
     private double shooterPower = 0;
 
-    private double kP = 0.0001, kI = 0, kD = 0;
+    private double kP = 0.0003, kI = 0, kD = 0;
 
     public double lastTime;
     public double lastCount;

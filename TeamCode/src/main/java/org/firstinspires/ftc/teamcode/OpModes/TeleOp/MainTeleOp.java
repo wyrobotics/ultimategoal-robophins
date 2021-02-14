@@ -22,6 +22,7 @@ public class MainTeleOp extends LinearOpMode {
     int shootIndex = 0;
     double speed = 0; //variable for shooter speed
 
+    int macro = 710;
     double topGoalSpeed = 0.9;
     double powerShotSpeed = 0.8;
 
@@ -49,8 +50,9 @@ public class MainTeleOp extends LinearOpMode {
 
         while(opModeIsActive()) {
 
-            mainRobot.drivebase.discOrtho(-this.gamepad1.left_stick_x, -this.gamepad1.left_stick_y,
-                    this.gamepad1.right_stick_x);
+            if(gamepad1.left_trigger > 0) { mainRobot.drivebase.discOrtho(-this.gamepad1.left_stick_x * .2, -this.gamepad1.left_stick_y * .2,
+                    this.gamepad1.right_stick_x * .2); }
+            else {mainRobot.drivebase.discOrtho(-this.gamepad1.left_stick_x, -this.gamepad1.left_stick_y, this.gamepad1.right_stick_x);}
 /*
             mainRobot.intake.intake(Math.max(gamepad1.right_trigger - gamepad1.left_trigger,
                     gamepad1.right_bumper ? 1 : -69));
@@ -85,8 +87,8 @@ public class MainTeleOp extends LinearOpMode {
             if (gamepad1.y) {mainRobot.jig(1);} //jiggle once
             //END ANTHONY CODE ANTHONY CODE
 
-            if(gamepad1.dpad_down) { mainRobot.shooter.setpoint = 800;} //power shot
-            else if(gamepad1.dpad_left || gamepad1.dpad_right) { mainRobot.shooter.setpoint = 840; }
+            //if(gamepad1.dpad_down) { mainRobot.shooter.setpoint = 800;} //power shot
+            if(gamepad1.dpad_left || gamepad1.dpad_right) { mainRobot.shooter.setpoint = 810; }
             else if(gamepad1.dpad_up) { mainRobot.shooter.setpoint = 880; } //high goal
             else if(gamepad1.x) { mainRobot.shooter.setpoint = 0; }
 
@@ -115,6 +117,10 @@ public class MainTeleOp extends LinearOpMode {
                 leftTab = false;
                 mainRobot.shooter.unflick();
             }
+            if(gamepad1.dpad_down) { mainRobot.drivebase.timedMovement(-.5, 0, 0, macro, 50); }
+            if(gamepad2.dpad_up) { macro += 10; }
+            if(gamepad2.dpad_down) { macro -= 10; }
+            telemetry.addData("ms:", macro);
 
 
 /*

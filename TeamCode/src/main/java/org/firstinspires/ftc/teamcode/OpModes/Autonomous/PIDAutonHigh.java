@@ -127,17 +127,17 @@ public class PIDAutonHigh extends LinearOpMode {
 
         //THIS VALUE iS THE power fOR THE SHots (the oNE IN simpleshoot that says power)
         //try 905 is 900 is a bit low, it sometimes goes too low (not sure relate to boltage or not) but never overshoots
-        mainRobot.shooter.setpoint = 925;
+        mainRobot.shooter.setpoint = 900;
         mainRobot.deng(5500);
         mainRobot.shooter.flick();
-        mainRobot.shooter.setpoint = 900;
+        mainRobot.shooter.setpoint = 890;
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
 
         mainRobot.jig(2);
         mainRobot.shooter.flick();
-        mainRobot.shooter.setpoint = 890;
+        mainRobot.shooter.setpoint = 880;
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
