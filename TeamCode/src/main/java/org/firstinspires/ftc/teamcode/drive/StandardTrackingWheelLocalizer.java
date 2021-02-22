@@ -24,7 +24,7 @@ import java.util.List;
  *    |              |
  *    \--------------/
  *
- * ree
+ * ree!
  */
 @Config
 public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer {
