@@ -34,8 +34,8 @@ public class DriveConstants {
      * from DriveVelocityPIDTuner.
      */
     public static final boolean RUN_USING_ENCODER = true;
-    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
-            getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0.45, 0, 0.2, 17);
+         //   getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
     /*
      * These are physical constants that can be determined from your robot (including the track
@@ -87,7 +87,7 @@ public class DriveConstants {
      * You are free to raise this on your own if you would like. It is best determined through experimentation.
 
      */
-    public static double MAX_VEL = 73.17330064499293;
+    public static double MAX_VEL = 86.85; //90% of theoretical max
     public static double MAX_ACCEL = 73.17330064499293;
     public static double MAX_ANG_VEL = Math.toRadians(232.91784999999996);
     public static double MAX_ANG_ACCEL = Math.toRadians(232.91784999999996);
