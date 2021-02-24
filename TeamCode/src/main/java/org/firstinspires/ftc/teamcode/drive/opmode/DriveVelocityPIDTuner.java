@@ -47,7 +47,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  * pause the tuning process and enter driver override, allowing the user to reset the position of
  * the bot in the event that it drifts off the path.
  * Pressing A (on the Xbox and Logitech F310 gamepads, X on the PS4 Dualshock gamepad) will cede
- * control back to the tuning process.
+ * control back to the tuning process. blargh
  */
 @Config
 @Autonomous(group = "drive")
