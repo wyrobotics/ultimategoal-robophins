@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Components.RRMainRobot;
+import org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning;
 import org.firstinspires.ftc.teamcode.Components.Software.Pipeline;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -143,6 +144,12 @@ public class RRMainAuton extends LinearOpMode {
         mainRobot.wobbleGoalArm.release();
         mainRobot.deng(500);
         mainRobot.wobbleGoalArm.down();
+
+        mainRobot.deng(1000);
+        mainRobot.drive.followTrajectory(autonTrajectories.toLineFromWobble);
+        mainRobot.deng(200);
+
+        GlobalPositioning.poseMemory = mainRobot.drive.getPoseEstimate();
 
     }
 
