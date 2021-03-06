@@ -58,7 +58,7 @@ public class RRMainAuton extends LinearOpMode {
         mainRobot.shooter.enableController();
 
 
-        Pose2d initPose = new Pose2d(0, 0, Math.toRadians(180));
+        Pose2d initPose = new Pose2d(0, -2, Math.toRadians(180));
 
 
         waitForStart();
@@ -227,15 +227,15 @@ public class RRMainAuton extends LinearOpMode {
                             .build();
 
                     toPowerShot = mainRobot.drive.trajectoryBuilder(dropWobble.end())
-                            .lineToLinearHeading(new Pose2d(62,14,0))
+                            .lineToLinearHeading(new Pose2d(62,16,0))
                             .build();
 
                     powerShotStrafeOne = mainRobot.drive.trajectoryBuilder(toPowerShot.end())
-                            .strafeLeft(5)
+                            .strafeLeft(10)
                             .build();
 
                     powerShotStrafeTwo = mainRobot.drive.trajectoryBuilder(powerShotStrafeOne.end())
-                            .strafeLeft(7)
+                            .strafeLeft(12)
                             .build();
 
                     getSecondWobble = mainRobot.drive.trajectoryBuilder(powerShotStrafeTwo.end())
