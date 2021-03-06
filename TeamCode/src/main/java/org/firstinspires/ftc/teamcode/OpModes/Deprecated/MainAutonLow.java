@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.OpModes.Autonomous;
+package org.firstinspires.ftc.teamcode.OpModes.Deprecated;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Components.MainRobot;
-import org.firstinspires.ftc.teamcode.Components.Software.Sampler;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -12,7 +11,6 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
@@ -22,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Autonomous
-public class MainAutonMed extends LinearOpMode {
+public class MainAutonLow extends LinearOpMode {
 
     private MainRobot mainRobot;
 
@@ -42,7 +40,7 @@ public class MainAutonMed extends LinearOpMode {
 
         phoneCam.openCameraDevice();
 
-        phoneCam.setPipeline(new MainAutonMed.Pipeline());
+        phoneCam.setPipeline(new MainAutonLow.Pipeline());
 
         phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
 
@@ -96,7 +94,7 @@ public class MainAutonMed extends LinearOpMode {
 
 
         //THIS VALUE iS THE power fOR THE SHots (the oNE IN simpleshoot that says power)
-        mainRobot.shooter.simpleShoot(0.76);
+        mainRobot.shooter.simpleShoot(0.72);
         mainRobot.deng(1000);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);

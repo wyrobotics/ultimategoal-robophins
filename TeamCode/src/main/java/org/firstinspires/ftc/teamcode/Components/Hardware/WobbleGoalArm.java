@@ -30,7 +30,7 @@ public class WobbleGoalArm {
 
     public void down() {
         mode = Mode.REST;
-        wobbleLifter.setPosition(0.3);
+        wobbleLifter.setPosition(0.35);
     }
 
 
@@ -41,7 +41,7 @@ public class WobbleGoalArm {
 
     public void grab() {
         grabberMode = GrabberMode.CLOSED;
-        wobbleGrabber.setPosition(0.3);
+        wobbleGrabber.setPosition(0.2);
     }
 
     public void release() {

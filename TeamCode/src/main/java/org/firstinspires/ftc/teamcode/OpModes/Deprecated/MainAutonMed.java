@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.OpModes.Autonomous;
+package org.firstinspires.ftc.teamcode.OpModes.Deprecated;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Components.MainRobot;
-import org.firstinspires.ftc.teamcode.Components.Software.Sampler;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -12,7 +11,6 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
@@ -22,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Autonomous
-public class MainAutonHigh extends LinearOpMode {
+public class MainAutonMed extends LinearOpMode {
 
     private MainRobot mainRobot;
 
@@ -42,7 +40,7 @@ public class MainAutonHigh extends LinearOpMode {
 
         phoneCam.openCameraDevice();
 
-        phoneCam.setPipeline(new MainAutonHigh.Pipeline());
+        phoneCam.setPipeline(new MainAutonMed.Pipeline());
 
         phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
 
@@ -62,11 +60,9 @@ public class MainAutonHigh extends LinearOpMode {
             phoneCam.stopStreaming();
             //phoneCam.closeCameraDevice();
 
-            //strafe after detection
             mainRobot.drivebase.timedMovement(0.5, 0, 0, 1500, 500);
             mainRobot.deng(500);
 
-            //go forward according to stack
             mainRobot.drivebase.timedMovement(0,-0.75,0,2500 + (height * 750),500);
             mainRobot.deng(500);
 
@@ -76,7 +72,7 @@ public class MainAutonHigh extends LinearOpMode {
             }
 
             mainRobot.wobbleGoalArm.lift();
-            mainRobot.deng(2000);
+            mainRobot.deng(1000);
             mainRobot.wobbleGoalArm.release();
             mainRobot.deng(500);
             mainRobot.wobbleGoalArm.down();
@@ -92,13 +88,13 @@ public class MainAutonHigh extends LinearOpMode {
             mainRobot.deng(500);
 
 
-        //the turn is good for 1 and 2 but not 0 because the error accumulates on those two
+
         mainRobot.drivebase.turn180();
         mainRobot.deng(1000);
 
 
         //THIS VALUE iS THE power fOR THE SHots (the oNE IN simpleshoot that says power)
-        mainRobot.shooter.simpleShoot(0.8);
+        mainRobot.shooter.simpleShoot(0.76);
         mainRobot.deng(1000);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
@@ -110,12 +106,10 @@ public class MainAutonHigh extends LinearOpMode {
         mainRobot.shooter.unflick();
         mainRobot.deng(50);
         mainRobot.jig(2);
-        mainRobot.deng(1000);
         mainRobot.shooter.flick();
         mainRobot.deng(1000);
         mainRobot.shooter.unflick();
         mainRobot.deng(1000);
-        mainRobot.drivebase.turn180();
         //mainRobot.deng(8000);
 
         mainRobot.shooter.simpleShoot(0);
