@@ -50,9 +50,9 @@ public class MainTeleOp extends LinearOpMode {
 
         while(opModeIsActive()) {
 
-            if(gamepad1.left_trigger > 0) { mainRobot.drivebase.discOrtho(-this.gamepad1.left_stick_x * .2, -this.gamepad1.left_stick_y * .2,
+            if(gamepad1.left_trigger > 0) { mainRobot.drivebase.discOrtho(-this.gamepad1.left_stick_x * .2, this.gamepad1.left_stick_y * .2,
                     this.gamepad1.right_stick_x * .2); }
-            else {mainRobot.drivebase.discOrtho(-this.gamepad1.left_stick_x, -this.gamepad1.left_stick_y, this.gamepad1.right_stick_x);}
+            else {mainRobot.drivebase.discOrtho(-this.gamepad1.left_stick_x, this.gamepad1.left_stick_y, this.gamepad1.right_stick_x);}
 /*
             mainRobot.intake.intake(Math.max(gamepad1.right_trigger - gamepad1.left_trigger,
                     gamepad1.right_bumper ? 1 : -69));

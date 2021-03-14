@@ -61,12 +61,12 @@ public class Shooter {
     }
 
     public void flick() {
-        flicker.setPosition(0.8);
+        flicker.setPosition(0.4);
         flicked = true;
     }
 
     public void unflick() {
-        flicker.setPosition(0.4);
+        flicker.setPosition(0.6);
         flicked = false;
     }
 

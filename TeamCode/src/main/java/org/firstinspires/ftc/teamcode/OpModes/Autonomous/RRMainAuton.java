@@ -88,12 +88,10 @@ public class RRMainAuton extends LinearOpMode {
 
         mainRobot.drive.followTrajectory(autonTrajectories.toPowerShot);
 
-        mainRobot.deng(200);
-
         telemetry.addData("Heading: ", mainRobot.drive.getExternalHeading());
         telemetry.update();
 
-        mainRobot.shooter.setpoint = 720;
+        mainRobot.shooter.setpoint = 810;
 
         mainRobot.deng(2000);
         mainRobot.shooter.flick();
@@ -130,7 +128,7 @@ public class RRMainAuton extends LinearOpMode {
 
         mainRobot.drive.followTrajectory(autonTrajectories.grabSecondWobble);
 
-        mainRobot.deng(2500);
+        mainRobot.deng(1000);
         mainRobot.wobbleGoalArm.grab();
         mainRobot.deng(1000);
         mainRobot.wobbleGoalArm.down();
@@ -145,9 +143,11 @@ public class RRMainAuton extends LinearOpMode {
         mainRobot.deng(500);
         mainRobot.wobbleGoalArm.down();
 
-        mainRobot.deng(1000);
-        mainRobot.drive.followTrajectory(autonTrajectories.toLineFromWobble);
-        mainRobot.deng(200);
+        if(height != 2) {
+            mainRobot.deng(1000);
+            mainRobot.drive.followTrajectory(autonTrajectories.toLineFromWobble);
+            mainRobot.deng(200);
+        }
 
         GlobalPositioning.poseMemory = mainRobot.drive.getPoseEstimate();
 
@@ -172,16 +172,15 @@ public class RRMainAuton extends LinearOpMode {
 
             switch(stackHeight) {
 
-                //0 RING STACK
                 case 0:
 
                     dropWobble = mainRobot.drive.trajectoryBuilder(initPose)
-                            .strafeLeft(5)
-                            .splineToConstantHeading(new Vector2d(60, -13), Math.toRadians(180))
+                            .splineToConstantHeading(new Vector2d(10,-8), Math.toRadians(180))
+                            .splineToConstantHeading(new Vector2d(40, -13), Math.toRadians(180))
                             .build();
 
                     toPowerShot = mainRobot.drive.trajectoryBuilder(dropWobble.end())
-                            .lineToLinearHeading(new Pose2d(62,12,0))
+                            .lineToLinearHeading(new Pose2d(62,21,0))
                             .build();
 
                     powerShotStrafeOne = mainRobot.drive.trajectoryBuilder(toPowerShot.end())
@@ -197,7 +196,7 @@ public class RRMainAuton extends LinearOpMode {
                             .build();
 
                     grabSecondWobble = mainRobot.drive.trajectoryBuilder(getSecondWobble.end())
-                            .back(6,
+                            .back(5,
                                     new MinVelocityConstraint(
                                             Arrays.asList(
                                                     new AngularVelocityConstraint(DriveConstants.MAX_ANG_VEL),
@@ -208,11 +207,11 @@ public class RRMainAuton extends LinearOpMode {
                             .build();
 
                     dropSecondWobble = mainRobot.drive.trajectoryBuilder(grabSecondWobble.end())
-                            .lineToLinearHeading(new Pose2d(68, 0, Math.toRadians(90)))
+                            .lineToLinearHeading(new Pose2d(68, 8, Math.toRadians(90)))
                             .build();
 
                     toLineFromWobble = mainRobot.drive.trajectoryBuilder(dropSecondWobble.end())
-                            .back(6)
+                            .forward(6)
                             .build();
 
                     break;
@@ -227,7 +226,7 @@ public class RRMainAuton extends LinearOpMode {
                             .build();
 
                     toPowerShot = mainRobot.drive.trajectoryBuilder(dropWobble.end())
-                            .lineToLinearHeading(new Pose2d(62,16,0))
+                            .lineToLinearHeading(new Pose2d(62,24,0))
                             .build();
 
                     powerShotStrafeOne = mainRobot.drive.trajectoryBuilder(toPowerShot.end())
@@ -258,7 +257,7 @@ public class RRMainAuton extends LinearOpMode {
                             .build();
 
                     toLineFromWobble = mainRobot.drive.trajectoryBuilder(dropSecondWobble.end())
-                            .back(5)
+                            .forward(5)
                             .build();
 
                     break;
@@ -267,16 +266,16 @@ public class RRMainAuton extends LinearOpMode {
                 case 2:
 
                     dropWobble = mainRobot.drive.trajectoryBuilder(initPose)
-                            .strafeLeft(3)
-                            .splineToConstantHeading(new Vector2d(108, -13), Math.toRadians(180))
+                            .strafeLeft(1)
+                            .splineToConstantHeading(new Vector2d(98, -8), Math.toRadians(180))
                             .build();
 
                     toPowerShot = mainRobot.drive.trajectoryBuilder(dropWobble.end())
-                            .lineToLinearHeading(new Pose2d(70,14,0))
+                            .lineToLinearHeading(new Pose2d(70,26,0))
                             .build();
 
                     powerShotStrafeOne = mainRobot.drive.trajectoryBuilder(toPowerShot.end())
-                            .strafeLeft(7)
+                            .strafeLeft(5)
                             .build();
 
                     powerShotStrafeTwo = mainRobot.drive.trajectoryBuilder(powerShotStrafeOne.end())
@@ -284,11 +283,11 @@ public class RRMainAuton extends LinearOpMode {
                             .build();
 
                     getSecondWobble = mainRobot.drive.trajectoryBuilder(powerShotStrafeTwo.end())
-                            .lineToLinearHeading(new Pose2d(40, 24, Math.toRadians(20)))
+                            .lineToLinearHeading(new Pose2d(52, 33, Math.toRadians(20)))
                             .build();
 
                     grabSecondWobble = mainRobot.drive.trajectoryBuilder(getSecondWobble.end())
-                            .back(6,
+                            .back(12,
                                     new MinVelocityConstraint(
                                             Arrays.asList(
                                                     new AngularVelocityConstraint(DriveConstants.MAX_ANG_VEL),
@@ -299,7 +298,8 @@ public class RRMainAuton extends LinearOpMode {
                             .build();
 
                     dropSecondWobble = mainRobot.drive.trajectoryBuilder(grabSecondWobble.end())
-                            .lineToLinearHeading(new Pose2d(108, 8, Math.toRadians(90)))
+                            .forward(10)
+                            .splineToSplineHeading(new Pose2d(95, 4, Math.toRadians(90)), 0)
                             .build();
 
                     toLineFromWobble = mainRobot.drive.trajectoryBuilder(dropSecondWobble.end())
