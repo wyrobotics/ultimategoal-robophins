@@ -88,8 +88,8 @@ public class MainTeleOp extends LinearOpMode {
             //END ANTHONY CODE ANTHONY CODE
 
             //if(gamepad1.dpad_down) { mainRobot.shooter.setpoint = 800;} //power shot
-            if(gamepad1.dpad_left || gamepad1.dpad_right) { mainRobot.shooter.setpoint = 810; }
-            else if(gamepad1.dpad_up) { mainRobot.shooter.setpoint = 880; } //high goal
+            if(gamepad1.dpad_left || gamepad1.dpad_right) { mainRobot.shooter.setpoint = 780; }
+            else if(gamepad1.dpad_up) { mainRobot.shooter.setpoint = 865; } //high goal
             else if(gamepad1.x) { mainRobot.shooter.setpoint = 0; }
 
             if(!bDown && gamepad1.b) {
@@ -135,6 +135,10 @@ public class MainTeleOp extends LinearOpMode {
                             (shootIndex == 1 ? "Top Goal" : "Power Shot"));
 */
 
+            telemetry.addData("Front left:", mainRobot.drivebase.frontLeft.getCurrentPosition());
+            telemetry.addData("Front right:", mainRobot.drivebase.frontRight.getCurrentPosition());
+            telemetry.addData("Back left:", mainRobot.drivebase.backLeft.getCurrentPosition());
+            telemetry.addData("Back right:", mainRobot.drivebase.backRight.getCurrentPosition());
             telemetry.update();
             mainRobot.deng(10);
 

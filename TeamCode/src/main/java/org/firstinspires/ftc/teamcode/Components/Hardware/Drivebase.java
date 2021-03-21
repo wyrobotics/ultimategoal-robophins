@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Components.Software.GlobalPositioning;
 
 public class Drivebase {
 
-    private DcMotor frontLeft, frontRight, backLeft, backRight;
+    public DcMotor frontLeft, frontRight, backLeft, backRight;
     private double maxPower = 1;
 
     private Telemetry telemetry;

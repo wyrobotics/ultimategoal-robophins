@@ -28,12 +28,13 @@ public class WobbleGoalArm {
 
     }
 
+    //down = into the robot
     public void down() {
         mode = Mode.REST;
         wobbleLifter.setPosition(0.35);
     }
 
-
+    //lift = into the robot
     public void lift() {
         mode = Mode.LIFT;
         wobbleLifter.setPosition(1);
@@ -46,7 +47,7 @@ public class WobbleGoalArm {
 
     public void release() {
         grabberMode = GrabberMode.OPEN;
-        wobbleGrabber.setPosition(1);
+        wobbleGrabber.setPosition(.8);
     }
 
 }
