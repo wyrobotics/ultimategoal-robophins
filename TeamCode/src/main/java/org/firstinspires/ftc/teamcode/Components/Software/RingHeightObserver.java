@@ -26,7 +26,7 @@ public class RingHeightObserver extends LinearOpMode {
 
     double contourArea = 0;
 
-    int stackHeight(double area) { return (area < 100) ? 0 : ((area > 250) ? 2 : 1); }
+    int stackHeight(double area) { return (area < 20) ? 0 : ((area > 250) ? 2 : 1); }
 
     @Override
     public void runOpMode() {

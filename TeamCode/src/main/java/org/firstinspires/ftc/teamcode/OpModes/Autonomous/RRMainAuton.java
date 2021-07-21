@@ -85,9 +85,9 @@ public class RRMainAuton extends LinearOpMode {
         //mainRobot.deng(200);
 
         mainRobot.wobbleGoalArm.lift();
-        mainRobot.deng(500);
+        mainRobot.deng(700);
         mainRobot.wobbleGoalArm.release();
-        mainRobot.deng(500);
+        mainRobot.deng(700);
         mainRobot.wobbleGoalArm.down();
         mainRobot.deng(500);
 
@@ -96,7 +96,7 @@ public class RRMainAuton extends LinearOpMode {
         telemetry.addData("Heading: ", mainRobot.drive.getExternalHeading());
         telemetry.update();
 
-        mainRobot.shooter.setpoint = 800;
+        mainRobot.shooter.setpoint = 790;
 
         mainRobot.deng(2000);
         mainRobot.shooter.flick();

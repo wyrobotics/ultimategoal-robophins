@@ -84,7 +84,11 @@ public class MainTeleOp extends LinearOpMode {
             mainRobot.shooter.simpleShoot(speed); //set shooter motors to shooting speed as described above lulw git rekt documentation kekw
             */
 
-            if (gamepad1.y) {mainRobot.jig(1);} //jiggle once
+            if (gamepad1.y) {
+                mainRobot.wacker.lowerWacker();
+                mainRobot.deng(500);
+                mainRobot.wacker.upperWacker();
+            } //jiggle once
             //END ANTHONY CODE ANTHONY CODE
 
             //if(gamepad1.dpad_down) { mainRobot.shooter.setpoint = 800;} //power shot
@@ -116,6 +120,9 @@ public class MainTeleOp extends LinearOpMode {
             } else if(leftTab && !gamepad1.left_bumper) {
                 leftTab = false;
                 mainRobot.shooter.unflick();
+                mainRobot.wacker.lowerWacker();
+                mainRobot.deng(500);
+                mainRobot.wacker.upperWacker();
             }
             if(gamepad1.dpad_down) { mainRobot.drivebase.timedMovement(-.5, 0, 0, macro, 50); }
             if(gamepad2.dpad_up) { macro += 10; }

@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.Components.Hardware.Drivebase;
 import org.firstinspires.ftc.teamcode.Components.Hardware.Intake;
 import org.firstinspires.ftc.teamcode.Components.Hardware.Ramp;
 import org.firstinspires.ftc.teamcode.Components.Hardware.Shooter;
+import org.firstinspires.ftc.teamcode.Components.Hardware.Wacker;
 import org.firstinspires.ftc.teamcode.Components.Hardware.WobbleGoalArm;
 import org.firstinspires.ftc.teamcode.Components.Software.HardwareThreadExecutor;
 import org.firstinspires.ftc.teamcode.Components.Software.OdometryTracker;
@@ -20,6 +21,7 @@ public class  MainRobot {
     public Ramp ramp;
     public Intake intake;
     public WobbleGoalArm wobbleGoalArm;
+    public Wacker wacker;
     public Drivebase drivebase;
 
     public OdometryTracker odometryTracker;
@@ -30,6 +32,7 @@ public class  MainRobot {
         shooter = new Shooter(hardwareMap, telemetry);
         intake = new Intake(hardwareMap, telemetry);
         wobbleGoalArm = new WobbleGoalArm(hardwareMap, telemetry);
+        wacker = new Wacker(hardwareMap, telemetry);
         drivebase = new Drivebase(hardwareMap, telemetry);
         ramp = new Ramp(hardwareMap, telemetry);
 
